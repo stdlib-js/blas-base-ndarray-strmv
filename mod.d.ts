@@ -1,4 +1,4 @@
-/**
+/*
 * @license Apache-2.0
 *
 * Copyright (c) 2026 The Stdlib Authors.
@@ -16,20 +16,11 @@
 * limitations under the License.
 */
 
-'use strict';
+// TypeScript Version: 4.1
 
-// MODULES //
+/// <reference types="https://cdn.jsdelivr.net/gh/stdlib-js/types@main/index.d.ts"/>
 
-var numelDimension = require( '@stdlib/ndarray-base-numel-dimension' );
-var getStrides = require( '@stdlib/ndarray-base-strides' );
-var getStride = require( '@stdlib/ndarray-base-stride' );
-var getOffset = require( '@stdlib/ndarray-base-offset' );
-var getData = require( '@stdlib/ndarray-base-data-buffer' );
-var ndarraylike2scalar = require( '@stdlib/ndarray-base-ndarraylike2scalar' );
-var strided = require( '@stdlib/blas-base-strmv' ).ndarray;
-
-
-// MAIN //
+import { float32ndarray, ndarray } from '@stdlib/types/ndarray';
 
 /**
 * Performs one of the matrix-vector operations `x = A*x` or `x = A^T*x`, where `x` is a one-dimensional ndarray and `A` is an `N` by `N` unit, or non-unit, upper or lower triangular matrix.
@@ -44,8 +35,8 @@ var strided = require( '@stdlib/blas-base-strmv' ).ndarray;
 *     -   a zero-dimensional ndarray specifying whether `A` should be transposed, conjugate-transposed, or not transposed.
 *     -   a zero-dimensional ndarray specifying whether `A` has a unit or non-unit diagonal.
 *
-* @param {ArrayLikeObject<Object>} arrays - array-like object containing ndarrays
-* @returns {Object} output ndarray
+* @param arrays - array-like object containing ndarrays
+* @returns output ndarray
 *
 * @example
 * var Float32Matrix = require( '@stdlib/ndarray-matrix-float32' );
@@ -74,29 +65,9 @@ var strided = require( '@stdlib/blas-base-strmv' ).ndarray;
 * var bool = ( z === x );
 * // returns true
 */
-function strmv( arrays ) {
-	var trans;
-	var uplo;
-	var diag;
-	var st;
-	var A;
-	var x;
-
-	A = arrays[ 0 ];
-	x = arrays[ 1 ];
-
-	uplo = ndarraylike2scalar( arrays[ 2 ] );
-	trans = ndarraylike2scalar( arrays[ 3 ] );
-	diag = ndarraylike2scalar( arrays[ 4 ] );
-
-	st = getStrides( A, false );
-
-	strided( uplo, trans, diag, numelDimension( A, 0 ), getData( A ), st[ 0 ], st[ 1 ], getOffset( A ), getData( x ), getStride( x, 0 ), getOffset( x ) ); // eslint-disable-line max-len
-
-	return x;
-}
+declare function strmv( arrays: [ float32ndarray, float32ndarray, ndarray, ndarray, ndarray ] ): float32ndarray;
 
 
 // EXPORTS //
 
-module.exports = strmv;
+export = strmv;
